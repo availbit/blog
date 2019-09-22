@@ -3,19 +3,10 @@ from django.utils import timezone
 
 # Create your models here.
 
-class Guest(models.Model):
-    name = models.CharField(max_length=200)
-
-class PostGuest(models.Model):
-    author = models.ForeignKey(Guest, on_delete=models.CASCADE)
-    title =  models.CharField(max_length=200)
-    text = models.TextField()
-    created_date = models.DateTimeField(default=timezone.now)
-    published_date = models.DateTimeField(blank=True, null=True)
-
-    def publish(self):
-        self.published_date = timezone.now()
-        self.save()
+class MyUser(models.Model):
+    author = models.ForeignKey(MyUser, on_delete=models.CASCADE)
+    username = models.CharField(max_length=200)
+    password = models.CharField(max_legth=7)
 
     def __str__(self):
         return self.title

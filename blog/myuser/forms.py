@@ -8,6 +8,7 @@ class SignUpForm(forms.ModelForm):
         model = MyUser
         fields = ('username', 'password')
 
+
 class SignInForm(forms.ModelForm):
 
     class Meta:

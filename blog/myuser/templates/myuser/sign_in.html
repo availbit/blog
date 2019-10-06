@@ -1,3 +1,4 @@
+{% load static %}
 <html>
 	<head>
 		<title>Sign In</title>
@@ -5,10 +6,12 @@
 	<body>
 		<div>
 			<h1>Sign In</h1>
-			<form method="GET" class="sign-in-form">
-				User:<input type="text">
+			<form method="POST" class="sign-in-form">
+				<!-- {{ form.as_p }} -->
+				{% csrf_token %}
+				User:<input type="text" name="username" id="username">
 				<br/>
-				Passwd:<input type="password">
+				Passwd:<input type="password" name="password" id="password">
 				<br/>
 				<button type="submit" class="save btn btn-defautl">Sign In</button>
 			</form>

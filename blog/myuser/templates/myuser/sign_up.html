@@ -1,3 +1,4 @@
+{% load static %}
 <html>
 	<head>
 		<title>Sign Up</title>
@@ -6,9 +7,10 @@
 		<div>
 			<h1>Sign Up</h1>
 			<form method="POST" class="sign-up-form">
-				User:<input type="text">
+				{% csrf_token %}
+				User:<input type="text" id="username">
 				<br/>
-				Passwd:<input type="password">
+				Passwd:<input type="password" id="password">
 				<br/>
 				<button type="submit" class="save btn btn-defautl">Sign Up</button>
 			</form>

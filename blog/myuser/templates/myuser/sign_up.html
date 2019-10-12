@@ -8,9 +8,9 @@
 			<h1>Sign Up</h1>
 			<form method="POST" class="sign-up-form">
 				{% csrf_token %}
-				User:<input type="text" id="username">
+				User:<input type="text" name="username" id="username">
 				<br/>
-				Passwd:<input type="password" id="password">
+				Passwd:<input type="password" name="password" id="password">
 				<br/>
 				<button type="submit" class="save btn btn-defautl">Sign Up</button>
 			</form>

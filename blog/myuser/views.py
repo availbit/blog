@@ -7,11 +7,17 @@ from .forms import SignInForm
 def sign_up(request):
     if request.method == "POST":
         form = SignUpForm(request.POST)
-        user = form.save(commit=False)
-        user.username = request.POST["username"]
-        user.password = request.POST["password"]
-        user.save()
-        return render(request, 'myuser/sign_in.html', {'form':form})
+
+        if form.is_valid():
+            print(f'CLEANED:{form.cleaned_data}')
+            user = form.save(commit=False)
+            user.username = form.cleaned_data["username"]
+            user.password = form.cleaned_data["password"]
+            #user.registered_date = timezone.now()
+            user.save()
+            return render(request, 'myuser/sign_in.html', {'form':form})
+        else:
+            return render(request, 'myuser/sign_up.html')
     else:
         return render(request, 'myuser/sign_up.html')
 
@@ -20,13 +26,15 @@ def sign_in(request):
         form = SignInForm(request.POST)
         username = request.POST["username"]
         password = request.POST["password"]
+        user = MyUser.objects.get(username=username)
 
-        user = MyUser.objects.filter(username=username)
+        print(f'OBJECTS: {user}')
+        print(f'OBJECTS: {user.username}, {user.password}')
 
         if user and user.password == password:
-            return HttpResponseRedirect('post_list')
+            return render(request, 'myblog/post_list.html')
         else:
-            return render(request, 'myuser/sign_in.html', {'form':form})
+            return render(request, 'myuser/sign_in.html')
     else:
         form = SignInForm()
         return render(request, 'myuser/sign_in.html', {'form':form})

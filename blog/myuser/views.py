@@ -14,7 +14,6 @@ def sign_up(request):
             user = form.save(commit=False)
             user.username = form.cleaned_data["username"]
             user.password = make_password(form.cleaned_data["password"])
-            #user.registered_date = timezone.now()
             user.save()
             return redirect('sign_in')
         else:

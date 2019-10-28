@@ -28,15 +28,23 @@ def sign_in(request):
         password = request.POST["password"]
         user = MyUser.objects.get(username=username)
 
-        print(f'OBJECTS: {user}')
-        print(f'OBJECTS: {user.username}, {user.password}')
-        valid = check_password(password, user.password)
-        print(f'VALIDPAS: {valid}')
-
         if user and check_password(password, user.password):
-            return redirect('post_list')
+            
+            request.session['id'] = username
+            request.user.is_authenticated= True
+            return redirect(request, 'myblog/post_list')
         else:
             return render(request, 'myuser/sign_in.html')
     else:
         return render(request, 'myuser/sign_in.html')
+
+def sign_out(request):
+    if request.method == "POST":
+        form = SignOutForm(request.POST)
+
+        username = request.POST["username"]
+
+        return redirect(request, 'myuser/sign_in.html')
+    else:
+        return render(request, 'myuser/sign_out.html')
 

@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import check_password, make_password
+from django.contrib.auth import authenticate
 from .models import MyUser
 from .forms import SignUpForm
 from .forms import SignInForm
@@ -31,8 +32,8 @@ def sign_in(request):
         if user and check_password(password, user.password):
             
             request.session['id'] = username
-            request.user.is_authenticated= True
-            return redirect(request, 'myblog/post_list')
+            authenticate(username=username, password=password);
+            return render(request, 'myblog/post_list.html')
         else:
             return render(request, 'myuser/sign_in.html')
     else:

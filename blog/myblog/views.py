@@ -6,8 +6,6 @@ from .forms import PostForm
 
 
 def post_list(request):
-    sess = request.session.get('id', False)
-    print(f'request: {request.user.is_authenticated}')
     if not request.session.get('id', False):
         raise PermissionDenied
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
